@@ -1,0 +1,58 @@
+package BiblioUni.Controller;
+
+import BiblioUni.Service.LibroService;
+import BiblioUni.Service.PrestamoService;
+import BiblioUni.Service.UsuarioService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+@RequestMapping("/prestamos")
+@RequiredArgsConstructor
+public class PrestamoViewController {
+
+    private final PrestamoService prestamoService;
+    private final LibroService libroService;
+    private final UsuarioService usuarioService;
+
+    @GetMapping
+    public String listar(Model model){
+        model.addAttribute("prestamos", prestamoService.listarPrestamos());
+        return "Prestamos/index";
+    }
+
+    @GetMapping("/registrar")
+    public String formulario(Model model){
+
+        model.addAttribute("libros", libroService.listarTodo());
+        model.addAttribute("usuarios", usuarioService.listar());
+
+        return "Prestamos/registrar";
+    }
+
+    @PostMapping("/registrar")
+    public String registrar(
+            @RequestParam Long usuarioId,
+            @RequestParam String isbn,
+            Model model
+    ){
+
+        try {
+
+            prestamoService.registrarPrestamo(usuarioId,isbn);
+
+            model.addAttribute("mensaje","Préstamo registrado correctamente");
+
+        }catch (Exception e){
+
+            model.addAttribute("error", e.getMessage());
+        }
+
+        model.addAttribute("libros", libroService.listarTodo());
+        model.addAttribute("usuarios", usuarioService.listar());
+
+        return "Prestamos/registrar";
+    }
+}

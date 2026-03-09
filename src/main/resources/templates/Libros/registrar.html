@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="mainTemplate.html :: layout" xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+<div th:fragment="content">
+
+    <div class="container mt-4">
+
+        <h2 th:text="${libro.isbn == null ? 'Registrar Libro' : 'Actualizar Libro'}"></h2>
+
+        <form th:action="@{/libros/guardar}" th:object="${libro}" method="post">
+
+            <div class="mb-3">
+                <label class="form-label">ISBN</label>
+                <input type="text" th:field="*{isbn}" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Título</label>
+                <input type="text" th:field="*{titulo}" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Autor</label>
+                <input type="text" th:field="*{autor}" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Editorial</label>
+                <input type="text" th:field="*{editorial}" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Cantidad Disponible</label>
+                <input type="number" th:field="*{cantDisponible}" class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                Guardar
+            </button>
+
+            <a th:href="@{/libros}" class="btn btn-secondary">
+                Cancelar
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+</html>

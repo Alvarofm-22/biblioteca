@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="mainTemplate.html :: layout" xmlns:th="http://www.w3.org/1999/xhtml">
+
+
+<div th:fragment="content">
+
+    <div class="container mt-4">
+
+        <h2 th:text="${usuario.id == null ? 'Registrar Usuario' : 'Actualizar Usuario'}"></h2>
+
+        <form th:action="@{/usuarios/guardar}" th:object="${usuario}" method="post">
+
+            <input type="hidden" th:field="*{id}">
+
+            <div class="mb-3">
+                <label>Nombre</label>
+                <input type="text" th:field="*{nombre}" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label>Email</label>
+                <input type="email" th:field="*{email}" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label>Password</label>
+                <input type="password" th:field="*{password}" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label>Tipo</label>
+                <select th:field="*{tipo}" class="form-control">
+                    <option value="ESTUDIANTE">Estudiante</option>
+                    <option value="DOCENTE">Docente</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label>Estado</label>
+                <select th:field="*{estado}" class="form-control">
+                    <option value="true">Activo</option>
+                    <option value="false">Inactivo</option>
+                </select>
+            </div>
+
+            <button class="btn btn-primary">Guardar</button>
+
+            <a th:href="@{/usuarios}" class="btn btn-secondary">
+                Cancelar
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+</html>

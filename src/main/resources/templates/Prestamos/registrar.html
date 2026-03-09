@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="mainTemplate.html :: layout">
+
+<div th:fragment="content">
+
+    <div class="container mt-4">
+
+        <h2 class="mb-4">Registrar Préstamo</h2>
+
+        <!-- MENSAJE EXITO -->
+        <div th:if="${mensaje}" class="alert alert-success">
+            <span th:text="${mensaje}"></span>
+        </div>
+
+        <!-- MENSAJE ERROR -->
+        <div th:if="${error}" class="alert alert-danger">
+            <span th:text="${error}"></span>
+        </div>
+
+        <form th:action="@{/prestamos/registrar}" method="post">
+
+            <!-- USUARIO -->
+            <div class="mb-3">
+                <label class="form-label">Usuario</label>
+
+                <select name="usuarioId" class="form-control" required>
+
+                    <option value="">Seleccione usuario</option>
+
+                    <option th:each="u : ${usuarios}"
+                            th:value="${u.id}"
+                            th:text="${u.nombre}">
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- LIBRO -->
+            <div class="mb-3">
+
+                <label class="form-label">Libro</label>
+
+                <select name="isbn" class="form-control" required>
+
+                    <option value="">Seleccione libro</option>
+
+                    <option th:each="l : ${libros}"
+                            th:value="${l.isbn}"
+                            th:text="${l.titulo + ' (Disponibles: ' + l.cantDisponible + ')'}">
+                    </option>
+
+                </select>
+
+            </div>
+
+            <button class="btn btn-primary">
+                Registrar
+            </button>
+
+            <a th:href="@{/prestamos}" class="btn btn-secondary">
+                Cancelar
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+</html>
